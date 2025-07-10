@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://example.com/sitemap.xml
+
+# 特定のファイルを除外
+Disallow: /sql/
+Disallow: /tests/
+Disallow: /sw.js
+Disallow: /manifest.json 
