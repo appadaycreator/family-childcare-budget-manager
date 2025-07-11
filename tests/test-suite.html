@@ -603,7 +603,7 @@
                 category: 'security',
                 run: async () => {
                     await simulateDelay(900);
-                    const testInput = `<script>alert("XSS")</script>`;
+                    const testInput = '<script>alert("XSS")<\/script>';
                     const sanitized = testInput.replace(/<script.*?<\/script>/gi, '');
                     
                     if (sanitized !== testInput) {
