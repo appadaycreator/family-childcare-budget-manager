@@ -670,14 +670,20 @@
         function showResult(testId, result) {
             const resultDiv = document.getElementById(testId + '-result');
             resultDiv.className = `test-result ${result.status} test-animation`;
+            const icon = result.status === 'success'
+                ? 'check-circle'
+                : result.status === 'error'
+                    ? 'times-circle'
+                    : 'exclamation-triangle';
             resultDiv.innerHTML = `
-                <div class="flex items-center justify-between">
-                    <div>
-                        <i class="fas fa-${result.status === 'success' ? 'check-circle' : result.status === 'error' ? 'times-circle' : 'exclamation-triangle'}"></i>
-                        <span class="ml-2">${result.message}</span>
-                    </div>
-                    <span class="text-xs opacity-75">${new Date().toLocaleTimeString()}</span>
-                </div>
+                <details class="border rounded-lg p-2">
+                    <summary class="cursor-pointer flex items-center">
+                        <i class="fas fa-${icon} mr-2"></i>
+                        <span class="font-semibold mr-auto">${tests[testId].name}</span>
+                        <span class="text-xs opacity-75">${new Date().toLocaleTimeString()}</span>
+                    </summary>
+                    <div class="mt-2 ml-4 text-gray-700">${result.message}</div>
+                </details>
             `;
             resultDiv.classList.remove('hidden');
         }
@@ -769,23 +775,6 @@
                 ? Math.round((testConfig.endTime - testConfig.startTime) / 1000)
                 : 0;
 
-            const resultDetails = Object.values(testConfig.results).map(res => {
-                const icon = res.status === 'success'
-                    ? 'check-circle text-green-600'
-                    : res.status === 'warning'
-                        ? 'exclamation-triangle text-yellow-500'
-                        : 'times-circle text-red-600';
-                return `
-                    <details class="border rounded-lg p-2">
-                        <summary class="cursor-pointer flex items-center">
-                            <i class="fas fa-${icon} mr-2"></i>
-                            <span class="font-semibold">${res.name}</span>
-                        </summary>
-                        <div class="mt-2 ml-4 text-gray-700">${res.message}</div>
-                    </details>
-                `;
-            }).join('');
-
             summary.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-green-50 p-4 rounded-lg">
@@ -806,9 +795,6 @@
                             <span class="font-semibold">総テスト数: ${total}</span>
                         </div>
                     </div>
-                </div>
-                <div class="mt-4 space-y-2">
-                    ${resultDetails || '<p class="text-gray-600">テストを実行して結果を表示します</p>'}
                 </div>
             `;
         }
