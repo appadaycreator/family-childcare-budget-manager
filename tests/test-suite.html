@@ -693,6 +693,10 @@
             button.disabled = true;
             
             try {
+                if (!testConfig.startTime) {
+                    testConfig.startTime = Date.now();
+                }
+
                 const result = await test.run();
                 showResult(testId, result);
 
@@ -709,12 +713,16 @@
                 } else if (result.status === 'warning') {
                     testConfig.warningTests++;
                 }
+                testConfig.endTime = Date.now();
                 updateStats();
-                
+                showTestSummary();
+
             } catch (error) {
                 showResult(testId, { status: 'error', message: 'テスト実行中にエラーが発生しました: ' + error.message });
                 testConfig.failedTests++;
+                testConfig.endTime = Date.now();
                 updateStats();
+                showTestSummary();
             } finally {
                 button.innerHTML = originalText;
                 button.disabled = false;
@@ -757,6 +765,9 @@
             const successRate = total > 0 ? Math.round((testConfig.passedTests / total) * 100) : 0;
 
             const summary = document.getElementById('testSummary');
+            const duration = (testConfig.startTime && testConfig.endTime)
+                ? Math.round((testConfig.endTime - testConfig.startTime) / 1000)
+                : 0;
 
             const resultDetails = Object.values(testConfig.results).map(res => {
                 const icon = res.status === 'success'
@@ -786,7 +797,7 @@
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <div class="flex items-center">
                             <i class="fas fa-clock text-blue-600 mr-2"></i>
-                            <span class="font-semibold">実行時間: ${Math.round((testConfig.endTime - testConfig.startTime) / 1000)}秒</span>
+                            <span class="font-semibold">実行時間: ${duration}秒</span>
                         </div>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
