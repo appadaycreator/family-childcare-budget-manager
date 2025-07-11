@@ -458,7 +458,8 @@
             failedTests: 0,
             warningTests: 0,
             startTime: null,
-            endTime: null
+            endTime: null,
+            results: {}
         };
 
         // Test definitions
@@ -694,7 +695,13 @@
             try {
                 const result = await test.run();
                 showResult(testId, result);
-                
+
+                testConfig.results[testId] = {
+                    name: test.name,
+                    status: result.status,
+                    message: result.message
+                };
+
                 if (result.status === 'success') {
                     testConfig.passedTests++;
                 } else if (result.status === 'error') {
@@ -719,6 +726,7 @@
             testConfig.passedTests = 0;
             testConfig.failedTests = 0;
             testConfig.warningTests = 0;
+            testConfig.results = {};
             
             const runAllButton = document.getElementById('runAllTests');
             const originalText = runAllButton.innerHTML;
@@ -747,8 +755,26 @@
         function showTestSummary() {
             const total = testConfig.passedTests + testConfig.failedTests + testConfig.warningTests;
             const successRate = total > 0 ? Math.round((testConfig.passedTests / total) * 100) : 0;
-            
+
             const summary = document.getElementById('testSummary');
+
+            const resultDetails = Object.values(testConfig.results).map(res => {
+                const icon = res.status === 'success'
+                    ? 'check-circle text-green-600'
+                    : res.status === 'warning'
+                        ? 'exclamation-triangle text-yellow-500'
+                        : 'times-circle text-red-600';
+                return `
+                    <details class="border rounded-lg p-2">
+                        <summary class="cursor-pointer flex items-center">
+                            <i class="fas fa-${icon} mr-2"></i>
+                            <span class="font-semibold">${res.name}</span>
+                        </summary>
+                        <div class="mt-2 ml-4 text-gray-700">${res.message}</div>
+                    </details>
+                `;
+            }).join('');
+
             summary.innerHTML = `
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-green-50 p-4 rounded-lg">
@@ -770,6 +796,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-4 space-y-2">
+                    ${resultDetails || '<p class="text-gray-600">テストを実行して結果を表示します</p>'}
+                </div>
             `;
         }
 
@@ -777,6 +806,8 @@
             document.querySelectorAll('.test-result').forEach(el => {
                 el.classList.add('hidden');
             });
+
+            testConfig.results = {};
             
             testConfig.passedTests = 0;
             testConfig.failedTests = 0;
