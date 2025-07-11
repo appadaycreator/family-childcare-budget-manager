@@ -474,7 +474,7 @@
                         </button>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="accountsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="card p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-lg font-semibold">教育費口座</h3>
@@ -979,11 +979,11 @@
                 <form id="addAccountForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">口座名</label>
-                        <input type="text" class="input-field" placeholder="例: 教育費口座" required>
+                        <input type="text" name="name" class="input-field" placeholder="例: 教育費口座" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">月間目標額</label>
-                        <input type="number" class="input-field" placeholder="50000" required>
+                        <input type="number" name="monthlyGoal" class="input-field" placeholder="50000" required>
                     </div>
                     <div class="flex gap-3">
                         <button type="submit" class="btn btn-primary flex-1">追加</button>
@@ -1043,11 +1043,11 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">金額</label>
-                        <input type="number" class="input-field" placeholder="8500" required>
+                        <input type="number" name="monthlyGoal" class="input-field" placeholder="8500" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">説明</label>
-                        <input type="text" class="input-field" placeholder="例: スーパーマーケット">
+                        <input type="text" name="name" class="input-field" placeholder="例: スーパーマーケット">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">日付</label>
@@ -1165,12 +1165,14 @@
             }
         });
         
-        function initializeApp() {
-            // Show dashboard by default
-            showPage('dashboard');
-            
-            // Initialize PWA - Service Worker registration moved to end of file
-        }
+       function initializeApp() {
+           // Show dashboard by default
+           showPage('dashboard');
+
+            renderStoredAccounts();
+
+           // Initialize PWA - Service Worker registration moved to end of file
+       }
         
         function setupEventListeners() {
             // Mobile menu
@@ -1276,6 +1278,10 @@
         }
         
         function getAccountData(accountType) {
+            const stored = loadFromLocalStorage('accounts') || [];
+            const found = stored.find(a => a.id === accountType);
+            if (found) return found;
+
             const accounts = {
                 education: {
                     name: '教育費口座',
@@ -1501,15 +1507,16 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const accountData = {
+                id: `acc-${Date.now()}`,
                 name: formData.get('name'),
                 monthlyGoal: parseInt(formData.get('monthlyGoal')),
                 balance: 0,
                 userId: currentUser?.id
             };
-            
-            // Add to Supabase (when configured)
-            // addAccountToDatabase(accountData);
-            
+
+            addAccountToUI(accountData);
+            addAccountToDatabase(accountData);
+
             document.getElementById('addAccountModal').classList.add('hidden');
             e.target.reset();
         }
@@ -1554,15 +1561,12 @@
         }
         
         function updateAccountDisplay(accountData) {
-            // Update the account display based on account type
             const accountType = accountData.id;
-            const accountCards = {
-                education: document.querySelector('[data-account="education"]').closest('.card'),
-                hobby: document.querySelector('[data-account="hobby"]').closest('.card'),
-                emergency: document.querySelector('[data-account="emergency"]').closest('.card')
-            };
-            
-            const card = accountCards[accountType];
+            let card = null;
+            const editButton = document.querySelector(`[data-account="${accountType}"]`);
+            if (editButton) {
+                card = editButton.closest('.card');
+            }
             if (card) {
                 // Update account name
                 card.querySelector('h3').textContent = accountData.name;
@@ -1591,6 +1595,65 @@
                     }
                 }
             }
+        }
+
+        function addAccountToUI(accountData) {
+            const container = document.getElementById('accountsContainer');
+            if (!container) return;
+
+            const card = document.createElement('div');
+            card.className = 'card p-6';
+            card.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">${accountData.name}</h3>
+                    <div class="flex items-center gap-2">
+                        <button class="edit-account-btn text-gray-400 hover:text-gray-600" data-account="${accountData.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <p class="text-3xl font-bold text-blue-600">¥${accountData.balance.toLocaleString()}</p>
+                    <p class="text-sm text-gray-500">現在の残高</p>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>月間目標</span>
+                        <span>¥${accountData.monthlyGoal.toLocaleString()}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:0"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">今月: ¥0</p>
+                </div>
+            `;
+
+            container.appendChild(card);
+
+            const editBtn = card.querySelector('.edit-account-btn');
+            editBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openEditAccountModal(accountData.id);
+            });
+        }
+
+        function addAccountToDatabase(accountData) {
+            const accounts = loadFromLocalStorage('accounts') || [];
+            accounts.push(accountData);
+            saveToLocalStorage('accounts', accounts);
+
+            if (supabase) {
+                supabase.from('accounts').insert([accountData]).catch(err => {
+                    console.error('Supabase insert error:', err);
+                });
+            }
+        }
+
+        function renderStoredAccounts() {
+            const stored = loadFromLocalStorage('accounts') || [];
+            stored.forEach(acc => {
+                addAccountToUI(acc);
+            });
         }
         
         function checkAuthStatus() {
