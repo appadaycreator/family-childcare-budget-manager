@@ -791,17 +791,47 @@
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.test-btn').forEach(button => {
+            console.log('DOM Content Loaded - Initializing test suite');
+            
+            // Individual test buttons
+            const testButtons = document.querySelectorAll('.test-btn');
+            console.log('Found test buttons:', testButtons.length);
+            
+            testButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const testId = button.getAttribute('data-test');
+                    console.log('Running individual test:', testId);
                     runTest(testId);
                 });
             });
             
-            document.getElementById('runAllTests').addEventListener('click', runAllTests);
-            document.getElementById('clearResults').addEventListener('click', clearResults);
+            // Run all tests button
+            const runAllButton = document.getElementById('runAllTests');
+            if (runAllButton) {
+                console.log('Found run all tests button');
+                runAllButton.addEventListener('click', () => {
+                    console.log('Run all tests clicked');
+                    runAllTests();
+                });
+            } else {
+                console.error('Run all tests button not found');
+            }
             
+            // Clear results button
+            const clearButton = document.getElementById('clearResults');
+            if (clearButton) {
+                console.log('Found clear results button');
+                clearButton.addEventListener('click', () => {
+                    console.log('Clear results clicked');
+                    clearResults();
+                });
+            } else {
+                console.error('Clear results button not found');
+            }
+            
+            // Initialize stats
             updateStats();
+            console.log('Test suite initialization complete');
         });
     </script>
 </body>
