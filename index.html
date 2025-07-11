@@ -285,6 +285,10 @@
                         <i class="fas fa-cog text-gray-600"></i>
                         <span>設定</span>
                     </a>
+                    <a href="how-to-use.html" class="nav-item flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors" target="_blank">
+                        <i class="fas fa-question-circle text-orange-600"></i>
+                        <span>使い方</span>
+                    </a>
                 </nav>
                 
                 <div class="mt-8 p-4 bg-blue-50 rounded-lg">
@@ -324,6 +328,10 @@
                 <a href="#" class="nav-item block p-3 rounded-lg hover:bg-gray-100 transition-colors" data-page="settings">
                     <i class="fas fa-cog text-gray-600 mr-3"></i>
                     設定
+                </a>
+                <a href="how-to-use.html" class="nav-item block p-3 rounded-lg hover:bg-gray-100 transition-colors" target="_blank">
+                    <i class="fas fa-question-circle text-orange-600 mr-3"></i>
+                    使い方
                 </a>
             </nav>
         </div>
@@ -1383,11 +1391,16 @@
         
         function checkAuthStatus() {
             // Check if user is logged in
-            // This would typically check with Supabase
             const userSession = localStorage.getItem('userSession');
             if (userSession) {
-                currentUser = JSON.parse(userSession);
-                showDashboard();
+                try {
+                    currentUser = JSON.parse(userSession);
+                    showDashboard();
+                } catch (error) {
+                    console.error('Session parsing error:', error);
+                    localStorage.removeItem('userSession');
+                    showAuthModal();
+                }
             } else {
                 showAuthModal();
             }
@@ -1472,7 +1485,6 @@
                     showNotification('成功', 'ログインしました', 'success');
                     currentUser = data.user;
                     localStorage.setItem('userSession', JSON.stringify(data.user));
-                    document.body.removeChild(document.querySelector('.fixed.inset-0'));
                     showDashboard();
                 }
             });
@@ -1489,7 +1501,24 @@
         }
         
         function showDashboard() {
+            // Hide auth modal if exists
+            const authModal = document.querySelector('.fixed.inset-0');
+            if (authModal) {
+                document.body.removeChild(authModal);
+            }
+            
+            // Show dashboard page
             showPage('dashboard');
+            
+            // Update navigation active state
+            navItems.forEach(item => {
+                item.classList.remove('bg-blue-50', 'text-blue-700');
+            });
+            
+            const dashboardNav = document.querySelector('[data-page="dashboard"]');
+            if (dashboardNav) {
+                dashboardNav.classList.add('bg-blue-50', 'text-blue-700');
+            }
         }
         
         // Share functionality
