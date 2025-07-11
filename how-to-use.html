@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使い方 - ファミリー養育費管理システム</title>
+    <title>使い方ガイド - ファミリー養育費管理システム</title>
     <meta name="description" content="ファミリー養育費管理システムの詳細な使い方ガイド。口座管理、支出管理、夫婦同期機能の操作方法を解説。">
     <meta name="keywords" content="養育費管理,使い方,ガイド,口座管理,支出管理,夫婦同期">
     <meta name="author" content="AppADayCreator">
@@ -16,7 +16,7 @@
     <meta name="apple-mobile-web-app-title" content="養育費管理">
     
     <!-- OGP -->
-    <meta property="og:title" content="使い方 - ファミリー養育費管理システム">
+    <meta property="og:title" content="使い方ガイド - ファミリー養育費管理システム">
     <meta property="og:description" content="ファミリー養育費管理システムの詳細な使い方ガイド">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://appadaycreator.github.io/family-childcare-budget-manager/how-to-use.html">
@@ -58,22 +58,24 @@
         
         body {
             font-family: 'Noto Sans JP', 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: var(--text-color);
             transition: all 0.3s ease;
+            min-height: 100vh;
         }
         
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
         
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
         
         .btn {
@@ -90,29 +92,30 @@
         }
         
         .btn-primary {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
             color: white;
         }
         
         .btn-primary:hover {
-            background: #2563EB;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
         
         .btn-secondary {
-            background: var(--secondary-color);
+            background: linear-gradient(135deg, var(--secondary-color), #059669);
             color: white;
         }
         
         .btn-secondary:hover {
-            background: #059669;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
         }
         
         .step-number {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -120,31 +123,127 @@
             justify-content: center;
             font-weight: bold;
             margin-right: 1rem;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
         
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
+            color: white;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
         
         .toc-item {
             transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 12px;
         }
         
         .toc-item:hover {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
             color: white;
+            transform: translateX(8px);
         }
         
         .toc-item.active {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
             color: white;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #FEE2E2, #FECACA);
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #DBEAFE, #BFDBFE);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .screenshot {
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+        
+        .floating-nav {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #2563EB);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .sticky-nav {
+            position: sticky;
+            top: 2rem;
+            z-index: 100;
         }
     </style>
 </head>
@@ -155,7 +254,7 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
+    <nav class="bg-white/90 backdrop-blur-md shadow-lg fixed w-full z-50 border-b border-white/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -163,41 +262,106 @@
                     <span class="text-xl font-bold text-gray-800">養育費管理</span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="lp.html" class="text-gray-600 hover:text-blue-600 transition-colors">ホーム</a>
-                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition-colors">お問い合わせ</a>
-                    <a href="index.html" class="btn btn-primary">アプリを開始</a>
+                    <a href="lp.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-home mr-1"></i>ホーム
+                    </a>
+                    <a href="contact.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <i class="fas fa-envelope mr-1"></i>お問い合わせ
+                    </a>
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-rocket mr-1"></i>アプリを開始
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
     
+    <!-- Hero Section -->
+    <section class="pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="card p-8 mb-8">
+                <div class="mb-6">
+                    <i class="fas fa-graduation-cap text-5xl text-blue-600 mb-4"></i>
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">使い方ガイド</h1>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        ファミリー養育費管理システムの詳細な使い方をご紹介します。<br>
+                        初めての方でも簡単に始められるよう、ステップバイステップで解説します。
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">簡単開始</h3>
+                        <p class="text-gray-600">3ステップで始められます</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">夫婦で共有</h3>
+                        <p class="text-gray-600">リアルタイムで同期</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">詳細分析</h3>
+                        <p class="text-gray-600">グラフで見える化</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Main Content -->
-    <div class="pt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Table of Contents -->
-                <aside class="lg:col-span-1">
-                    <div class="card p-6 sticky top-24">
-                        <h2 class="text-xl font-bold mb-4">目次</h2>
-                        <nav class="space-y-2">
-                            <a href="#getting-started" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-rocket mr-2"></i>はじめに
-                            </a>
-                            <a href="#dashboard" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-tachometer-alt mr-2"></i>ダッシュボード
-                            </a>
-                            <a href="#accounts" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-university mr-2"></i>口座管理
-                            </a>
-                            <a href="#expenses" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-receipt mr-2"></i>支出管理
-                            </a>
-                            <a href="#reports" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-chart-line mr-2"></i>レポート
-                            </a>
-                            <a href="#settings" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
-                                <i class="fas fa-cog mr-2"></i>設定
-                            </a>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Table of Contents -->
+            <aside class="lg:col-span-1">
+                <div class="card p-6 sticky-nav">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-list mr-2 text-blue-600"></i>目次
+                    </h2>
+                    <nav class="space-y-2">
+                        <a href="#getting-started" class="toc-item block">
+                            <i class="fas fa-rocket mr-2"></i>はじめに
+                        </a>
+                        <a href="#dashboard" class="toc-item block">
+                            <i class="fas fa-tachometer-alt mr-2"></i>ダッシュボード
+                        </a>
+                        <a href="#accounts" class="toc-item block">
+                            <i class="fas fa-university mr-2"></i>口座管理
+                        </a>
+                        <a href="#expenses" class="toc-item block">
+                            <i class="fas fa-receipt mr-2"></i>支出管理
+                        </a>
+                        <a href="#reports" class="toc-item block">
+                            <i class="fas fa-chart-line mr-2"></i>レポート
+                        </a>
+                        <a href="#settings" class="toc-item block">
+                            <i class="fas fa-cog mr-2"></i>設定
+                        </a>
+                        <a href="#tips" class="toc-item block">
+                            <i class="fas fa-lightbulb mr-2"></i>活用のコツ
+                        </a>
+                        <a href="#faq" class="toc-item block">
+                            <i class="fas fa-question-circle mr-2"></i>よくある質問
+                        </a>
+                        <a href="#troubleshooting" class="toc-item block">
+                            <i class="fas fa-tools mr-2"></i>トラブルシューティング
+                        </a>
+                    </nav>
+                    
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h3 class="font-semibold text-blue-800 mb-2">💡 お得情報</h3>
+                        <p class="text-sm text-blue-700 mb-3">夫婦で使うと効果倍増！</p>
+                        <a href="index.html" class="text-xs text-blue-600 hover:underline">今すぐ始める</a>
+                    </div>
+                </div>
+            </aside>
                             <a href="#tips" class="toc-item block p-2 rounded-lg text-gray-600 hover:text-blue-600">
                                 <i class="fas fa-lightbulb mr-2"></i>活用のコツ
                             </a>
@@ -205,450 +369,667 @@
                     </div>
                 </aside>
                 
-                <!-- Main Content -->
+                <!-- Main Content Area -->
                 <main class="lg:col-span-3">
-                    <!-- Header -->
-                    <div class="mb-8">
-                        <h1 class="text-4xl font-bold text-gray-800 mb-4">使い方ガイド</h1>
-                        <p class="text-xl text-gray-600">
-                            ファミリー養育費管理システムの詳細な使い方をご紹介します。
-                        </p>
-                    </div>
-                    
                     <!-- Getting Started -->
-                    <section id="getting-started" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-rocket text-blue-600 mr-3"></i>
-                                はじめに
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                ファミリー養育費管理システムは、夫婦で協力して子育て費用を効率的に管理するためのWebアプリケーションです。
-                                このガイドでは、各機能の使い方を詳しく説明します。
-                            </p>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                <div class="text-center">
-                                    <div class="feature-icon bg-blue-100 text-blue-600 mx-auto">
-                                        <i class="fas fa-user-plus"></i>
-                                    </div>
-                                    <h3 class="font-semibold text-gray-800 mb-2">1. アカウント作成</h3>
-                                    <p class="text-sm text-gray-600">メールアドレスで簡単登録</p>
-                                </div>
-                                <div class="text-center">
-                                    <div class="feature-icon bg-green-100 text-green-600 mx-auto">
-                                        <i class="fas fa-university"></i>
-                                    </div>
-                                    <h3 class="font-semibold text-gray-800 mb-2">2. 口座設定</h3>
-                                    <p class="text-sm text-gray-600">貯蓄用口座を登録</p>
-                                </div>
-                                <div class="text-center">
-                                    <div class="feature-icon bg-purple-100 text-purple-600 mx-auto">
-                                        <i class="fas fa-receipt"></i>
-                                    </div>
-                                    <h3 class="font-semibold text-gray-800 mb-2">3. 支出記録</h3>
-                                    <p class="text-sm text-gray-600">日々の支出を記録</p>
-                                </div>
+                    <section id="getting-started" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-rocket text-blue-600 mr-3"></i>はじめに
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            ファミリー養育費管理システムは、夫婦で子供の養育費を効率的に管理するためのWebアプリケーションです。
+                            口座管理、支出記録、レポート機能を備え、将来の教育費を計画的に貯蓄できます。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="text-center">
+                                <div class="step-number mx-auto mb-4">1</div>
+                                <h3 class="text-lg font-semibold mb-2">アカウント作成</h3>
+                                <p class="text-gray-600">メールアドレスとパスワードで簡単登録</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="step-number mx-auto mb-4">2</div>
+                                <h3 class="text-lg font-semibold mb-2">口座設定</h3>
+                                <p class="text-gray-600">教育費、習い事など目的別に口座を作成</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="step-number mx-auto mb-4">3</div>
+                                <h3 class="text-lg font-semibold mb-2">支出記録</h3>
+                                <p class="text-gray-600">日々の支出をカテゴリ別に記録</p>
                             </div>
                         </div>
+                        
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>おすすめの使い方
+                            </h3>
+                            <p class="text-gray-700">
+                                夫婦で同じアカウントにログインして使用すると、リアルタイムで貯蓄状況と支出を共有できます。
+                                月1回の振り返りミーティングで、家族の将来計画を立てましょう。
+                            </p>
+                        </div>
+                        
+                        <div class="success-box mt-6">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-check-circle text-green-600 mr-2"></i>無料で利用可能
+                            </h3>
+                            <p class="text-gray-700">
+                                このアプリは完全無料で利用できます。追加料金や月額費用は一切かかりません。
+                                今すぐ始めて、家族の将来を計画しましょう。
+                            </p>
+                        </div>
                     </section>
-                    
+
                     <!-- Dashboard -->
-                    <section id="dashboard" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-tachometer-alt text-blue-600 mr-3"></i>
-                                ダッシュボード
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                ダッシュボードでは、今月の貯蓄状況と支出の概要を一目で確認できます。
-                            </p>
-                            
-                            <div class="space-y-6">
-                                <div class="flex items-start">
-                                    <div class="step-number">1</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">サマリーカードの確認</h3>
-                                        <p class="text-gray-600 mb-4">
-                                            画面の上部に表示される4つのカードで、今月の貯蓄額、支出額、総貯蓄額、目標達成率を確認できます。
-                                        </p>
-                                        <div class="bg-gray-100 p-4 rounded-lg">
-                                            <ul class="text-sm text-gray-700 space-y-1">
-                                                <li>• 今月の貯蓄額：目標に対する進捗をプログレスバーで表示</li>
-                                                <li>• 今月の支出：前月との比較で増減を確認</li>
-                                                <li>• 総貯蓄額：全口座の合計残高</li>
-                                                <li>• 目標達成率：年間目標に対する達成率</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="step-number">2</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">グラフの確認</h3>
-                                        <p class="text-gray-600">
-                                            支出の推移グラフとカテゴリ別支出の円グラフで、家計の傾向を視覚的に把握できます。
-                                        </p>
-                                    </div>
-                                </div>
+                    <section id="dashboard" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-tachometer-alt text-blue-600 mr-3"></i>ダッシュボード
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            ダッシュボードでは、今月の貯蓄状況、支出、目標達成率を一目で確認できます。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-chart-pie text-green-600 mr-2"></i>主要指標
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-piggy-bank text-green-600 mr-2"></i>
+                                        今月の貯蓄額
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-receipt text-red-600 mr-2"></i>
+                                        今月の支出額
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-university text-blue-600 mr-2"></i>
+                                        総貯蓄額
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-target text-purple-600 mr-2"></i>
+                                        目標達成率
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-chart-line text-blue-600 mr-2"></i>グラフ表示
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-chart-area text-blue-600 mr-2"></i>
+                                        月別貯蓄推移
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-chart-pie text-purple-600 mr-2"></i>
+                                        支出カテゴリ別
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-history text-gray-600 mr-2"></i>
+                                        最近の取引履歴
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+                        
+                        <div class="info-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-info-circle text-blue-600 mr-2"></i>ダッシュボードの活用ポイント
+                            </h3>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• 毎日チェックして貯蓄の進捗を確認</li>
+                                <li>• 支出が多すぎる月は翌月で調整</li>
+                                <li>• 目標達成率が低い場合は計画を見直し</li>
+                            </ul>
+                        </div>
                     </section>
-                    
+
                     <!-- Accounts -->
-                    <section id="accounts" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-university text-green-600 mr-3"></i>
-                                口座管理
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                複数の口座を一元管理し、貯蓄目標の設定と進捗を可視化します。
-                            </p>
-                            
-                            <div class="space-y-6">
-                                <div class="flex items-start">
-                                    <div class="step-number">1</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">口座の追加</h3>
-                                        <p class="text-gray-600 mb-4">
-                                            「口座管理」ページで「新しい口座を追加」ボタンをクリックし、口座名、残高、目標額を入力します。
-                                        </p>
-                                        <div class="bg-green-50 border border-green-200 p-4 rounded-lg">
-                                            <h4 class="font-semibold text-green-800 mb-2">💡 コツ</h4>
-                                            <p class="text-sm text-green-700">
-                                                用途別に口座を分けることで、目的別の貯蓄管理ができます。
-                                                例：教育費用、緊急時用、旅行用など
-                                            </p>
-                                        </div>
+                    <section id="accounts" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-university text-blue-600 mr-3"></i>口座管理
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            目的別に口座を作成し、計画的に貯蓄を管理できます。教育費、習い事、緊急時など、
+                            それぞれの用途に応じて月間目標を設定しましょう。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-plus-circle text-green-600 mr-2"></i>口座の作成方法
+                                </h3>
+                                <ol class="space-y-3 text-gray-600">
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">1</span>
+                                        口座管理ページを開く
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">2</span>
+                                        「口座追加」ボタンをクリック
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">3</span>
+                                        口座名と月間目標額を入力
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">4</span>
+                                        「追加」ボタンで完了
+                                    </li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>おすすめの口座設定
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="p-4 bg-green-50 rounded-lg">
+                                        <h4 class="font-semibold text-green-800">教育費口座</h4>
+                                        <p class="text-sm text-green-700">月50,000円目標</p>
                                     </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="step-number">2</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">残高の更新</h3>
-                                        <p class="text-gray-600">
-                                            定期的に残高を更新することで、正確な貯蓄状況を把握できます。
-                                            月末や給料日など、決まったタイミングで更新することをお勧めします。
-                                        </p>
+                                    <div class="p-4 bg-blue-50 rounded-lg">
+                                        <h4 class="font-semibold text-blue-800">習い事口座</h4>
+                                        <p class="text-sm text-blue-700">月30,000円目標</p>
                                     </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="step-number">3</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">目標の設定</h3>
-                                        <p class="text-gray-600">
-                                            各口座に目標額を設定することで、進捗を可視化できます。
-                                            教育費、住宅購入資金など、具体的な目標を設定しましょう。
-                                        </p>
+                                    <div class="p-4 bg-yellow-50 rounded-lg">
+                                        <h4 class="font-semibold text-yellow-800">緊急時口座</h4>
+                                        <p class="text-sm text-yellow-700">月20,000円目標</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="warning-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>注意点
+                            </h3>
+                            <p class="text-gray-700">
+                                月間目標は現実的な金額に設定してください。無理な目標は継続が困難になりがちです。
+                                まずは少額から始めて、徐々に増やしていくことをおすすめします。
+                            </p>
+                        </div>
                     </section>
-                    
+
                     <!-- Expenses -->
-                    <section id="expenses" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-receipt text-red-600 mr-3"></i>
-                                支出管理
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                カテゴリ別の支出記録で、家計の見直しをサポートします。
-                            </p>
-                            
-                            <div class="space-y-6">
-                                <div class="flex items-start">
-                                    <div class="step-number">1</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">支出の記録</h3>
-                                        <p class="text-gray-600 mb-4">
-                                            「支出管理」ページで「新しい支出を追加」ボタンをクリックし、金額、カテゴリ、日付、メモを入力します。
-                                        </p>
-                                        <div class="bg-red-50 border border-red-200 p-4 rounded-lg">
-                                            <h4 class="font-semibold text-red-800 mb-2">📝 カテゴリ例</h4>
-                                            <div class="grid grid-cols-2 gap-2 text-sm text-red-700">
-                                                <div>• 食費</div>
-                                                <div>• 住居費</div>
-                                                <div>• 光熱費</div>
-                                                <div>• 通信費</div>
-                                                <div>• 教育費</div>
-                                                <div>• 医療費</div>
-                                                <div>• 交通費</div>
-                                                <div>• その他</div>
-                                            </div>
-                                        </div>
+                    <section id="expenses" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-receipt text-blue-600 mr-3"></i>支出管理
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            日々の支出をカテゴリ別に記録し、家計の見える化を実現します。
+                            食費、子供用品、教育費など、細かく分類して管理しましょう。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-plus text-green-600 mr-2"></i>支出の記録方法
+                                </h3>
+                                <ol class="space-y-3 text-gray-600">
+                                    <li class="flex items-start">
+                                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">1</span>
+                                        支出管理ページを開く
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">2</span>
+                                        「支出追加」ボタンをクリック
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">3</span>
+                                        カテゴリ、金額、説明を入力
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-0.5">4</span>
+                                        日付を選択して「追加」
+                                    </li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-tags text-purple-600 mr-2"></i>カテゴリ一覧
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="p-3 bg-red-50 rounded-lg">
+                                        <h4 class="font-semibold text-red-800">食費</h4>
+                                        <p class="text-xs text-red-700">スーパー、外食</p>
                                     </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="step-number">2</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">カテゴリの管理</h3>
-                                        <p class="text-gray-600">
-                                            設定ページでカテゴリの追加・編集・削除ができます。
-                                            家族の支出パターンに合わせてカスタマイズしましょう。
-                                        </p>
+                                    <div class="p-3 bg-purple-50 rounded-lg">
+                                        <h4 class="font-semibold text-purple-800">子供用品</h4>
+                                        <p class="text-xs text-purple-700">おもちゃ、衣服</p>
                                     </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="step-number">3</div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800 mb-2">支出の分析</h3>
-                                        <p class="text-gray-600">
-                                            月間レポートでカテゴリ別の支出割合や推移を確認できます。
-                                            無駄な支出を見つけて、効率的な家計管理を実現しましょう。
-                                        </p>
+                                    <div class="p-3 bg-blue-50 rounded-lg">
+                                        <h4 class="font-semibold text-blue-800">教育費</h4>
+                                        <p class="text-xs text-blue-700">塾、教材</p>
+                                    </div>
+                                    <div class="p-3 bg-green-50 rounded-lg">
+                                        <h4 class="font-semibold text-green-800">医療費</h4>
+                                        <p class="text-xs text-green-700">病院、薬</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>効率的な記録のコツ
+                            </h3>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• レシートを見ながらその日のうちに記録</li>
+                                <li>• 夫婦で分担して記録を分担</li>
+                                <li>• 月末に振り返って翌月の計画を立てる</li>
+                            </ul>
+                        </div>
                     </section>
-                    
+
                     <!-- Reports -->
-                    <section id="reports" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-chart-line text-purple-600 mr-3"></i>
-                                レポート
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                月間・年間の詳細なレポートで、家計の傾向を分析できます。
-                            </p>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <h3 class="font-semibold text-gray-800 mb-3">月間レポート</h3>
-                                    <ul class="text-gray-600 space-y-2">
-                                        <li>• 月間支出の合計</li>
-                                        <li>• カテゴリ別支出割合</li>
-                                        <li>• 前月との比較</li>
-                                        <li>• 貯蓄目標の達成率</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h3 class="font-semibold text-gray-800 mb-3">年間レポート</h3>
-                                    <ul class="text-gray-600 space-y-2">
-                                        <li>• 年間支出の推移</li>
-                                        <li>• 貯蓄額の成長</li>
-                                        <li>• 目標達成の進捗</li>
-                                        <li>• 来年の予算計画</li>
-                                    </ul>
-                                </div>
+                    <section id="reports" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-chart-line text-blue-600 mr-3"></i>レポート
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            月次・年次のレポートで支出傾向を分析し、将来の教育費計画を立てられます。
+                            グラフとデータで家計の現状を把握しましょう。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-chart-bar text-blue-600 mr-2"></i>利用可能なレポート
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-chart-area text-blue-600 mr-2"></i>
+                                        年間貯蓄推移
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-chart-pie text-purple-600 mr-2"></i>
+                                        支出分析
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-table text-green-600 mr-2"></i>
+                                        詳細レポート
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-download text-orange-600 mr-2"></i>
+                                        データエクスポート
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-calendar text-green-600 mr-2"></i>レポートの活用方法
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        月1回の振り返りミーティング
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        年間計画の見直し
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        教育費の将来予測
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        夫婦での情報共有
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+                        
+                        <div class="info-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-info-circle text-blue-600 mr-2"></i>レポートの見方
+                            </h3>
+                            <p class="text-gray-700">
+                                グラフの色分けでカテゴリ別の支出が一目で分かります。棒グラフは月別の比較、
+                                円グラフはカテゴリ別の割合を表示しています。目標達成率が低い月は、
+                                支出の見直しを検討しましょう。
+                            </p>
+                        </div>
                     </section>
-                    
+
                     <!-- Settings -->
-                    <section id="settings" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-cog text-gray-600 mr-3"></i>
-                                設定
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                アプリの動作や表示をカスタマイズできます。
-                            </p>
-                            
-                            <div class="space-y-4">
-                                <div class="border-l-4 border-blue-500 pl-4">
-                                    <h3 class="font-semibold text-gray-800 mb-2">プロフィール設定</h3>
-                                    <p class="text-gray-600">ユーザー名、メールアドレス、パスワードの変更</p>
-                                </div>
-                                
-                                <div class="border-l-4 border-green-500 pl-4">
-                                    <h3 class="font-semibold text-gray-800 mb-2">カテゴリ管理</h3>
-                                    <p class="text-gray-600">支出カテゴリの追加・編集・削除</p>
-                                </div>
-                                
-                                <div class="border-l-4 border-purple-500 pl-4">
-                                    <h3 class="font-semibold text-gray-800 mb-2">通知設定</h3>
-                                    <p class="text-gray-600">支出記録のリマインダーや目標達成の通知</p>
-                                </div>
-                                
-                                <div class="border-l-4 border-orange-500 pl-4">
-                                    <h3 class="font-semibold text-gray-800 mb-2">データエクスポート</h3>
-                                    <p class="text-gray-600">支出データのCSVエクスポート機能</p>
-                                </div>
+                    <section id="settings" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-cog text-blue-600 mr-3"></i>設定
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            アプリの表示設定、通知設定、データ管理など、個人の好みに合わせてカスタマイズできます。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-eye text-blue-600 mr-2"></i>表示設定
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-language text-blue-600 mr-2"></i>
+                                        言語設定（日本語/英語）
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-text-height text-blue-600 mr-2"></i>
+                                        文字サイズ調整
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-moon text-blue-600 mr-2"></i>
+                                        ダークモード切替
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-bell text-green-600 mr-2"></i>通知設定
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-calendar-check text-green-600 mr-2"></i>
+                                        月末レポート通知
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-bullseye text-green-600 mr-2"></i>
+                                        目標達成アラート
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-exclamation-triangle text-green-600 mr-2"></i>
+                                        予算超過警告
+                                    </li>
+                                </ul>
                             </div>
                         </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-database text-purple-600 mr-2"></i>データ管理
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-download text-purple-600 mr-2"></i>
+                                        データエクスポート
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-sync text-purple-600 mr-2"></i>
+                                        データ同期
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-trash text-red-600 mr-2"></i>
+                                        データ削除
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-shield-alt text-orange-600 mr-2"></i>セキュリティ
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-key text-orange-600 mr-2"></i>
+                                        パスワード変更
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-user-lock text-orange-600 mr-2"></i>
+                                        アカウントロック
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-history text-orange-600 mr-2"></i>
+                                        アクセス履歴
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>データのバックアップ
+                            </h3>
+                            <p class="text-gray-700">
+                                重要なデータは定期的にエクスポートしてバックアップを取ることをおすすめします。
+                                データの損失を防ぐため、月1回程度のバックアップを習慣にしましょう。
+                            </p>
+                        </div>
                     </section>
-                    
+
                     <!-- Tips -->
-                    <section id="tips" class="mb-12">
-                        <div class="card p-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                                <i class="fas fa-lightbulb text-yellow-600 mr-3"></i>
-                                活用のコツ
-                            </h2>
-                            <p class="text-gray-600 mb-6">
-                                より効果的にアプリを活用するためのコツをご紹介します。
-                            </p>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="space-y-4">
-                                    <div class="bg-blue-50 p-4 rounded-lg">
-                                        <h3 class="font-semibold text-blue-800 mb-2">🎯 目標設定のコツ</h3>
-                                        <p class="text-sm text-blue-700">
-                                            具体的で達成可能な目標を設定しましょう。
-                                            例：「月5万円貯蓄」より「教育費として月3万円、緊急時用として月2万円」
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="bg-green-50 p-4 rounded-lg">
-                                        <h3 class="font-semibold text-green-800 mb-2">📱 夫婦での活用</h3>
-                                        <p class="text-sm text-green-700">
-                                            夫婦で同じアカウントを使用し、共通の目標に向かって協力しましょう。
-                                            定期的に家計の話し合いの時間を作ることをお勧めします。
-                                        </p>
-                                    </div>
+                    <section id="tips" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-lightbulb text-blue-600 mr-3"></i>活用のコツ
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            より効果的にアプリを活用するためのコツをご紹介します。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-users text-blue-600 mr-2"></i>夫婦での活用
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        同じアカウントでログイン
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        月1回の振り返りミーティング
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        支出記録の分担
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        目標の共同設定
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                    <i class="fas fa-chart-line text-green-600 mr-2"></i>継続のコツ
+                                </h3>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        現実的な目標設定
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        習慣化（毎日チェック）
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        小さな成功を祝う
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-600 mr-2 mt-1"></i>
+                                        定期的な見直し
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i class="fas fa-star text-yellow-600 mr-2"></i>成功のポイント
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                                    <i class="fas fa-calendar-check text-yellow-600 text-2xl mb-2"></i>
+                                    <h4 class="font-semibold text-yellow-800">習慣化</h4>
+                                    <p class="text-sm text-yellow-700">毎日少しずつ記録</p>
                                 </div>
-                                
-                                <div class="space-y-4">
-                                    <div class="bg-purple-50 p-4 rounded-lg">
-                                        <h3 class="font-semibold text-purple-800 mb-2">📊 記録の習慣化</h3>
-                                        <p class="text-sm text-purple-700">
-                                            支出はその日のうちに記録する習慣をつけましょう。
-                                            レシートを撮影して後でまとめて記録する方法も効果的です。
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="bg-orange-50 p-4 rounded-lg">
-                                        <h3 class="font-semibold text-orange-800 mb-2">🔄 定期的な見直し</h3>
-                                        <p class="text-sm text-orange-700">
-                                            月1回はレポートを確認し、支出パターンを見直しましょう。
-                                            無駄な支出を削減し、貯蓄に回すことができます。
-                                        </p>
-                                    </div>
+                                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                    <i class="fas fa-users text-blue-600 text-2xl mb-2"></i>
+                                    <h4 class="font-semibold text-blue-800">夫婦協力</h4>
+                                    <p class="text-sm text-blue-700">二人で取り組む</p>
+                                </div>
+                                <div class="text-center p-4 bg-green-50 rounded-lg">
+                                    <i class="fas fa-chart-line text-green-600 text-2xl mb-2"></i>
+                                    <h4 class="font-semibold text-green-800">振り返り</h4>
+                                    <p class="text-sm text-green-700">定期的な見直し</p>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    
-                    <!-- CTA -->
-                    <section class="text-center">
-                        <div class="card p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                            <h2 class="text-2xl font-bold mb-4">今すぐ始めましょう</h2>
-                            <p class="text-lg mb-6 opacity-90">
-                                使い方を理解したら、実際にアプリを使ってみてください。
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a href="index.html" class="btn bg-white text-blue-600 hover:bg-gray-100">
-                                    <i class="fas fa-rocket mr-2"></i>
-                                    アプリを開始
-                                </a>
-                                <a href="contact.html" class="btn border-2 border-white text-white hover:bg-white hover:text-blue-600">
-                                    <i class="fas fa-question-circle mr-2"></i>
-                                    お問い合わせ
-                                </a>
+
+                    <!-- FAQ -->
+                    <section id="faq" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-question-circle text-blue-600 mr-3"></i>よくある質問
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-blue-600 pl-6">
+                                <h3 class="text-lg font-semibold mb-2">Q. 夫婦で同じアカウントを使っても大丈夫ですか？</h3>
+                                <p class="text-gray-600">A. はい、夫婦で同じアカウントを使用することをおすすめします。リアルタイムで情報を共有でき、家計管理が効率化されます。</p>
                             </div>
+                            
+                            <div class="border-l-4 border-green-600 pl-6">
+                                <h3 class="text-lg font-semibold mb-2">Q. データは安全に保存されますか？</h3>
+                                <p class="text-gray-600">A. はい、Supabaseの安全なクラウドサービスを使用してデータを保存しています。定期的なバックアップも推奨します。</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-purple-600 pl-6">
+                                <h3 class="text-lg font-semibold mb-2">Q. 月間目標はどのように設定すればよいですか？</h3>
+                                <p class="text-gray-600">A. まずは現在の支出を把握し、現実的な金額から始めることをおすすめします。徐々に増やしていくのがコツです。</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-orange-600 pl-6">
+                                <h3 class="text-lg font-semibold mb-2">Q. アプリは無料で使えますか？</h3>
+                                <p class="text-gray-600">A. はい、完全無料で利用できます。追加料金や月額費用は一切かかりません。</p>
+                            </div>
+                            
+                            <div class="border-l-4 border-red-600 pl-6">
+                                <h3 class="text-lg font-semibold mb-2">Q. データをエクスポートできますか？</h3>
+                                <p class="text-gray-600">A. はい、設定ページからデータをエクスポートできます。CSV形式でダウンロード可能です。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Troubleshooting -->
+                    <section id="troubleshooting" class="card p-8 mb-8 fade-in-up">
+                        <h2 class="text-3xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-tools text-blue-600 mr-3"></i>トラブルシューティング
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="warning-box">
+                                <h3 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>ログインできない
+                                </h3>
+                                <p class="text-gray-700 mb-2">パスワードを忘れた場合：</p>
+                                <ul class="text-gray-700 space-y-1 ml-4">
+                                    <li>• メールアドレスを確認</li>
+                                    <li>• パスワードリセット機能を使用</li>
+                                    <li>• デモモードで試す</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="info-box">
+                                <h3 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-info-circle text-blue-600 mr-2"></i>データが表示されない
+                                </h3>
+                                <p class="text-gray-700 mb-2">以下の手順を試してください：</p>
+                                <ul class="text-gray-700 space-y-1 ml-4">
+                                    <li>• ページを再読み込み</li>
+                                    <li>• ブラウザのキャッシュをクリア</li>
+                                    <li>• 別のブラウザで試す</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="success-box">
+                                <h3 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>パフォーマンスの改善
+                                </h3>
+                                <p class="text-gray-700 mb-2">アプリの動作を改善するには：</p>
+                                <ul class="text-gray-700 space-y-1 ml-4">
+                                    <li>• 最新のブラウザを使用</li>
+                                    <li>• 不要なタブを閉じる</li>
+                                    <li>• 定期的にブラウザを再起動</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                            <h3 class="font-semibold mb-4 flex items-center">
+                                <i class="fas fa-headset text-blue-600 mr-2"></i>サポートが必要な場合
+                            </h3>
+                            <p class="text-gray-700 mb-4">
+                                上記の方法で解決しない場合は、お気軽にお問い合わせください。
+                            </p>
+                            <a href="contact.html" class="btn btn-primary">
+                                <i class="fas fa-envelope mr-2"></i>お問い合わせ
+                            </a>
                         </div>
                     </section>
                 </main>
             </div>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-piggy-bank text-2xl text-blue-400 mr-3"></i>
-                        <span class="text-xl font-bold">養育費管理</span>
-                    </div>
-                    <p class="text-gray-400">
-                        夫婦で協力して子育て費用を効率的に管理するWebアプリケーション
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">アプリ</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">ダッシュボード</a></li>
-                        <li><a href="lp.html" class="text-gray-400 hover:text-white transition-colors">ホーム</a></li>
-                        <li><a href="tests/test-suite.html" class="text-gray-400 hover:text-white transition-colors">テスト</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">サポート</h3>
-                    <ul class="space-y-2">
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">お問い合わせ</a></li>
-                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition-colors">利用規約</a></li>
-                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">プライバシーポリシー</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-semibold mb-4">開発者</h3>
-                    <p class="text-gray-400 mb-4">
-                        AppADayCreator<br>
-                        毎日アプリを作るプロジェクト
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-gray-400">
-                    © 2024 AppADayCreator. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
-    
+
+    <!-- Floating Navigation -->
+    <div class="floating-nav">
+        <a href="#getting-started" class="floating-btn" title="ページトップ">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
     <script>
-        // スムーズスクロール
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             });
         });
-        
-        // 目次のアクティブ状態管理
+
+        // Active navigation highlighting
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '-20% 0px -80% 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                const id = entry.target.getAttribute('id');
-                const tocItem = document.querySelector(`a[href="#${id}"]`);
-                
                 if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
                     document.querySelectorAll('.toc-item').forEach(item => {
                         item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${id}`) {
+                            item.classList.add('active');
+                        }
                     });
-                    if (tocItem) {
-                        tocItem.classList.add('active');
-                    }
                 }
             });
         }, observerOptions);
-        
+
         document.querySelectorAll('section[id]').forEach(section => {
             observer.observe(section);
+        });
+
+        // Add fade-in animation to sections
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            fadeObserver.observe(section);
         });
     </script>
 </body>
