@@ -1686,6 +1686,8 @@
                 } catch (err) {
                     console.error('Supabase delete exception:', err);
                 }
+            } else {
+                console.log('Supabase not initialized; account deleted locally only');
             }
         }
 
