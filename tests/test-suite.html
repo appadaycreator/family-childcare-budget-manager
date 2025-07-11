@@ -437,6 +437,19 @@
                         </div>
                         <div class="test-result hidden" id="encryptionTest-result"></div>
                     </div>
+                    <div class="test-item" data-category="security">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">口座削除テスト</h3>
+                                <p class="text-sm text-gray-600">口座削除処理の検証</p>
+                            </div>
+                            <button class="btn btn-primary test-btn" data-test="accountDelete">
+                                <i class="fas fa-play"></i>
+                                実行
+                            </button>
+                        </div>
+                        <div class="test-result hidden" id="accountDelete-result"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -635,11 +648,29 @@
                     await simulateDelay(800);
                     const testData = 'sensitive-data';
                     const encrypted = btoa(testData);
-                    
+
                     if (encrypted !== testData) {
                         return { status: 'success', message: 'データ暗号化が正常に機能しています' };
                     } else {
                         return { status: 'error', message: 'データ暗号化に問題があります' };
+                    }
+                }
+            },
+
+            accountDelete: {
+                name: '口座削除テスト',
+                category: 'security',
+                run: async () => {
+                    await simulateDelay(500);
+                    localStorage.setItem('accounts', JSON.stringify([{ id: 'acc-test' }]));
+                    const stored = JSON.parse(localStorage.getItem('accounts')) || [];
+                    const filtered = stored.filter(a => a.id !== 'acc-test');
+                    localStorage.setItem('accounts', JSON.stringify(filtered));
+                    const after = JSON.parse(localStorage.getItem('accounts')) || [];
+                    if (after.length === 0) {
+                        return { status: 'success', message: '口座削除が正常に動作しています' };
+                    } else {
+                        return { status: 'error', message: '口座削除に問題があります' };
                     }
                 }
             }

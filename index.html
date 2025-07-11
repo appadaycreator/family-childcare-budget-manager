@@ -1017,6 +1017,7 @@
                     </div>
                     <div class="flex gap-3">
                         <button type="submit" class="btn btn-primary flex-1">更新</button>
+                        <button type="button" id="deleteAccountBtn" class="btn btn-danger flex-1">削除</button>
                         <button type="button" id="closeEditAccountModal" class="btn btn-secondary">キャンセル</button>
                     </div>
                 </form>
@@ -1231,6 +1232,7 @@
             // Forms
             document.getElementById('addAccountForm').addEventListener('submit', handleAddAccount);
             document.getElementById('editAccountForm').addEventListener('submit', handleEditAccount);
+            document.getElementById('deleteAccountBtn').addEventListener('click', handleDeleteAccount);
             document.getElementById('addExpenseForm').addEventListener('submit', handleAddExpense);
             
             // Share functionality
@@ -1556,10 +1558,19 @@
             
             // Add to Supabase (when configured)
             // updateAccountInDatabase(accountData);
-            
+
             document.getElementById('editAccountModal').classList.add('hidden');
         }
-        
+
+        function handleDeleteAccount() {
+            const accountId = document.getElementById('editAccountId').value;
+            if (!accountId) return;
+            if (!confirm('本当にこの口座を削除しますか？')) return;
+
+            deleteAccount(accountId);
+            document.getElementById('editAccountModal').classList.add('hidden');
+        }
+
         function updateAccountDisplay(accountData) {
             const accountType = accountData.id;
             let card = null;
@@ -1645,6 +1656,26 @@
             if (supabase) {
                 supabase.from('accounts').insert([accountData]).catch(err => {
                     console.error('Supabase insert error:', err);
+                });
+            }
+        }
+
+        function deleteAccount(accountId) {
+            let accounts = loadFromLocalStorage('accounts') || [];
+            accounts = accounts.filter(acc => acc.id !== accountId);
+            saveToLocalStorage('accounts', accounts);
+
+            const editButton = document.querySelector(`[data-account="${accountId}"]`);
+            if (editButton) {
+                const card = editButton.closest('.card');
+                if (card && card.parentNode) {
+                    card.parentNode.removeChild(card);
+                }
+            }
+
+            if (supabase) {
+                supabase.from('accounts').delete().eq('id', accountId).catch(err => {
+                    console.error('Supabase delete error:', err);
                 });
             }
         }
