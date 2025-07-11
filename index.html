@@ -244,9 +244,6 @@
                 <h1 class="text-xl font-bold text-gray-800 hidden sm:block">養育費管理</h1>
             </div>
             <div class="flex items-center gap-3">
-                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100">
-                    <i class="fas fa-moon text-gray-600"></i>
-                </button>
                 <button id="mobileMenuToggle" class="p-2 rounded-full hover:bg-gray-100">
                     <i class="fas fa-bars text-gray-600"></i>
                 </button>
@@ -480,9 +477,14 @@
                         <div class="card p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-lg font-semibold">教育費口座</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button class="edit-account-btn text-gray-400 hover:text-gray-600" data-account="education">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-gray-600">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="mb-4">
                                 <p class="text-3xl font-bold text-blue-600">¥850,000</p>
@@ -498,6 +500,16 @@
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">今月: ¥45,000</p>
                             </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>貯蓄目標</span>
+                                    <span>¥2,000,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 42.5%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">目標達成率: 42.5%</p>
+                            </div>
                             <button class="btn btn-primary w-full">
                                 <i class="fas fa-plus"></i>
                                 入金記録
@@ -507,9 +519,14 @@
                         <div class="card p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-lg font-semibold">習い事口座</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button class="edit-account-btn text-gray-400 hover:text-gray-600" data-account="hobby">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-gray-600">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="mb-4">
                                 <p class="text-3xl font-bold text-green-600">¥320,000</p>
@@ -525,6 +542,16 @@
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">今月: ¥22,500</p>
                             </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>貯蓄目標</span>
+                                    <span>¥500,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 64%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">目標達成率: 64%</p>
+                            </div>
                             <button class="btn btn-primary w-full">
                                 <i class="fas fa-plus"></i>
                                 入金記録
@@ -534,9 +561,14 @@
                         <div class="card p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-lg font-semibold">緊急時口座</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button class="edit-account-btn text-gray-400 hover:text-gray-600" data-account="emergency">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-gray-600">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="mb-4">
                                 <p class="text-3xl font-bold text-yellow-600">¥80,000</p>
@@ -551,6 +583,16 @@
                                     <div class="progress-fill" style="width: 60%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">今月: ¥12,000</p>
+                            </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>貯蓄目標</span>
+                                    <span>¥300,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 26.7%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">目標達成率: 26.7%</p>
                             </div>
                             <button class="btn btn-primary w-full">
                                 <i class="fas fa-plus"></i>
@@ -786,15 +828,7 @@
                                     </select>
                                 </div>
                                 
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <p class="font-medium">ダークモード</p>
-                                        <p class="text-sm text-gray-500">目に優しい表示</p>
-                                    </div>
-                                    <button id="darkModeToggle" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"></span>
-                                    </button>
-                                </div>
+
                             </div>
                         </div>
                         
@@ -850,6 +884,11 @@
                                     <a href="#" class="text-blue-600 hover:underline">利用規約</a>
                                     <a href="#" class="text-blue-600 hover:underline">プライバシーポリシー</a>
                                     <a href="#" class="text-blue-600 hover:underline">お問い合わせ</a>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <p class="text-xs text-gray-500 text-center">
+                                        © 2024 ファミリー養育費管理システム. All rights reserved.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -948,6 +987,36 @@
                     <div class="flex gap-3">
                         <button type="submit" class="btn btn-primary flex-1">追加</button>
                         <button type="button" id="closeAddAccountModal" class="btn btn-secondary">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Edit Account Modal -->
+        <div id="editAccountModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 class="text-lg font-semibold mb-4">口座を編集</h3>
+                <form id="editAccountForm" class="space-y-4">
+                    <input type="hidden" id="editAccountId" name="accountId">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">口座名</label>
+                        <input type="text" id="editAccountName" name="name" class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">現在の残高</label>
+                        <input type="number" id="editAccountBalance" name="balance" class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">月間目標額</label>
+                        <input type="number" id="editAccountGoal" name="monthlyGoal" class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">貯蓄目標額</label>
+                        <input type="number" id="editAccountTarget" name="targetAmount" class="input-field" placeholder="例: 1000000">
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="submit" class="btn btn-primary flex-1">更新</button>
+                        <button type="button" id="closeEditAccountModal" class="btn btn-secondary">キャンセル</button>
                     </div>
                 </form>
             </div>
@@ -1122,9 +1191,14 @@
                 });
             });
             
-            // Theme toggle
-            themeToggle.addEventListener('click', toggleTheme);
-            darkModeToggle.addEventListener('click', toggleTheme);
+            // Account edit buttons
+            document.querySelectorAll('.edit-account-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const accountType = btn.getAttribute('data-account');
+                    openEditAccountModal(accountType);
+                });
+            });
             
             // Settings
             languageSelect.addEventListener('change', changeLanguage);
@@ -1147,8 +1221,13 @@
                 document.getElementById('addExpenseModal').classList.add('hidden');
             });
             
+            document.getElementById('closeEditAccountModal').addEventListener('click', () => {
+                document.getElementById('editAccountModal').classList.add('hidden');
+            });
+            
             // Forms
             document.getElementById('addAccountForm').addEventListener('submit', handleAddAccount);
+            document.getElementById('editAccountForm').addEventListener('submit', handleEditAccount);
             document.getElementById('addExpenseForm').addEventListener('submit', handleAddExpense);
             
             // Share functionality
@@ -1179,19 +1258,45 @@
             });
         }
         
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+        function openEditAccountModal(accountType) {
+            const modal = document.getElementById('editAccountModal');
+            const form = document.getElementById('editAccountForm');
             
-            const icon = themeToggle.querySelector('i');
-            icon.className = isDarkMode ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-gray-600';
+            // Set account data based on type
+            const accountData = getAccountData(accountType);
             
-            // Update dark mode toggle
-            const toggle = darkModeToggle.querySelector('span');
-            toggle.style.transform = isDarkMode ? 'translateX(1.25rem)' : 'translateX(0)';
-            darkModeToggle.style.backgroundColor = isDarkMode ? '#3B82F6' : '#E5E7EB';
+            document.getElementById('editAccountId').value = accountType;
+            document.getElementById('editAccountName').value = accountData.name;
+            document.getElementById('editAccountBalance').value = accountData.balance;
+            document.getElementById('editAccountGoal').value = accountData.monthlyGoal;
+            document.getElementById('editAccountTarget').value = accountData.targetAmount || '';
             
-            saveUserPreferences();
+            modal.classList.remove('hidden');
+        }
+        
+        function getAccountData(accountType) {
+            const accounts = {
+                education: {
+                    name: '教育費口座',
+                    balance: 850000,
+                    monthlyGoal: 50000,
+                    targetAmount: 2000000
+                },
+                hobby: {
+                    name: '習い事口座',
+                    balance: 320000,
+                    monthlyGoal: 30000,
+                    targetAmount: 500000
+                },
+                emergency: {
+                    name: '緊急時口座',
+                    balance: 80000,
+                    monthlyGoal: 20000,
+                    targetAmount: 300000
+                }
+            };
+            
+            return accounts[accountType] || {};
         }
         
         function changeLanguage() {
@@ -1221,8 +1326,7 @@
         function saveUserPreferences() {
             const preferences = {
                 language: currentLanguage,
-                fontSize: currentFontSize,
-                darkMode: isDarkMode
+                fontSize: currentFontSize
             };
             localStorage.setItem('userPreferences', JSON.stringify(preferences));
         }
@@ -1233,14 +1337,9 @@
                 const preferences = JSON.parse(stored);
                 currentLanguage = preferences.language || 'ja';
                 currentFontSize = preferences.fontSize || 'base';
-                isDarkMode = preferences.darkMode || false;
                 
                 languageSelect.value = currentLanguage;
                 fontSizeSelect.value = currentFontSize;
-                
-                if (isDarkMode) {
-                    toggleTheme();
-                }
                 
                 updateLanguage();
                 changeFontSize();
@@ -1430,6 +1529,67 @@
             
             document.getElementById('addExpenseModal').classList.add('hidden');
             e.target.reset();
+        }
+        
+        function handleEditAccount(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const accountData = {
+                id: formData.get('accountId'),
+                name: formData.get('name'),
+                balance: parseInt(formData.get('balance')),
+                monthlyGoal: parseInt(formData.get('monthlyGoal')),
+                targetAmount: parseInt(formData.get('targetAmount')) || 0,
+                userId: currentUser?.id
+            };
+            
+            // Update account data in UI
+            updateAccountDisplay(accountData);
+            
+            // Add to Supabase (when configured)
+            // updateAccountInDatabase(accountData);
+            
+            document.getElementById('editAccountModal').classList.add('hidden');
+        }
+        
+        function updateAccountDisplay(accountData) {
+            // Update the account display based on account type
+            const accountType = accountData.id;
+            const accountCards = {
+                education: document.querySelector('[data-account="education"]').closest('.card'),
+                hobby: document.querySelector('[data-account="hobby"]').closest('.card'),
+                emergency: document.querySelector('[data-account="emergency"]').closest('.card')
+            };
+            
+            const card = accountCards[accountType];
+            if (card) {
+                // Update account name
+                card.querySelector('h3').textContent = accountData.name;
+                
+                // Update balance
+                const balanceElement = card.querySelector('.text-3xl');
+                balanceElement.textContent = `¥${accountData.balance.toLocaleString()}`;
+                
+                // Update monthly goal
+                const goalElement = card.querySelector('.text-sm:last-of-type');
+                if (goalElement && goalElement.textContent.includes('¥')) {
+                    goalElement.textContent = `¥${accountData.monthlyGoal.toLocaleString()}`;
+                }
+                
+                // Update target amount if exists
+                const targetElement = card.querySelector('.text-sm:contains("貯蓄目標")');
+                if (targetElement && accountData.targetAmount > 0) {
+                    const progress = (accountData.balance / accountData.targetAmount * 100).toFixed(1);
+                    const progressBar = card.querySelector('.progress-fill.bg-green-500');
+                    if (progressBar) {
+                        progressBar.style.width = `${Math.min(progress, 100)}%`;
+                    }
+                    const progressText = card.querySelector('.text-xs:contains("目標達成率")');
+                    if (progressText) {
+                        progressText.textContent = `目標達成率: ${progress}%`;
+                    }
+                }
+            }
         }
         
         function checkAuthStatus() {

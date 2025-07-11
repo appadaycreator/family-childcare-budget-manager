@@ -603,8 +603,8 @@
                 category: 'security',
                 run: async () => {
                     await simulateDelay(900);
-                    const testInput = '<script>alert("XSS")</script>';
-                    const sanitized = testInput.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                    const testInput = `<script>alert("XSS")</script>`;
+                    const sanitized = testInput.replace(/<script.*?<\/script>/gi, '');
                     
                     if (sanitized !== testInput) {
                         return { status: 'success', message: 'XSS対策が正常に機能しています' };
@@ -835,4 +835,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
