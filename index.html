@@ -1005,7 +1005,15 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0a2R0c2txcWd0ZGpsY2Rta3RyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxODI3NDEsImV4cCI6MjA2Nzc1ODc0MX0.2B7aJ8aeYINDchblUE3bA4ikRB94053LUzmGwW8MAzo';
         
         // Initialize Supabase
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        try {
+            if (window.supabase) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } else {
+                console.warn('Supabase library not loaded');
+            }
+        } catch (error) {
+            console.error('Supabase initialization error:', error);
+        }
         
         // DOM elements
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -1058,23 +1066,24 @@
         
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-            setupEventListeners();
-            loadUserPreferences();
-            initializeCharts();
-            checkAuthStatus();
+            try {
+                initializeApp();
+                setupEventListeners();
+                loadUserPreferences();
+                initializeCharts();
+                checkAuthStatus();
+            } catch (error) {
+                console.error('App initialization error:', error);
+                // Fallback: show dashboard even if there's an error
+                showPage('dashboard');
+            }
         });
         
         function initializeApp() {
             // Show dashboard by default
             showPage('dashboard');
             
-            // Initialize PWA
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('SW registered'))
-                    .catch(error => console.log('SW registration failed'));
-            }
+            // Initialize PWA - Service Worker registration moved to end of file
         }
         
         function setupEventListeners() {
@@ -1223,135 +1232,147 @@
         }
         
         function initializeCharts() {
-            // Savings chart
-            const savingsCtx = document.getElementById('savingsChart').getContext('2d');
-            savingsChart = new Chart(savingsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-                    datasets: [{
-                        label: '貯蓄額',
-                        data: [80000, 85000, 90000, 87000, 92000, 85000],
-                        borderColor: '#10B981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '¥' + value.toLocaleString();
+            try {
+                // Savings chart
+                const savingsCtx = document.getElementById('savingsChart');
+                if (savingsCtx && typeof Chart !== 'undefined') {
+                    savingsChart = new Chart(savingsCtx.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                            datasets: [{
+                                label: '貯蓄額',
+                                data: [80000, 85000, 90000, 87000, 92000, 85000],
+                                borderColor: '#10B981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return '¥' + value.toLocaleString();
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    });
                 }
-            });
-            
-            // Expenses chart
-            const expensesCtx = document.getElementById('expensesChart').getContext('2d');
-            expensesChart = new Chart(expensesCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['食費', '子供用品', '教育費', '医療費', 'その他'],
-                    datasets: [{
-                        data: [45000, 28000, 35000, 12000, 8000],
-                        backgroundColor: [
-                            '#EF4444',
-                            '#8B5CF6',
-                            '#3B82F6',
-                            '#10B981',
-                            '#F59E0B'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-            
-            // Yearly chart
-            const yearlyCtx = document.getElementById('yearlyChart').getContext('2d');
-            yearlyChart = new Chart(yearlyCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2020', '2021', '2022', '2023', '2024'],
-                    datasets: [{
-                        label: '年間貯蓄額',
-                        data: [800000, 950000, 1100000, 1200000, 1250000],
-                        backgroundColor: '#3B82F6'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '¥' + value.toLocaleString();
+                
+                // Expenses chart
+                const expensesCtx = document.getElementById('expensesChart');
+                if (expensesCtx && typeof Chart !== 'undefined') {
+                    expensesChart = new Chart(expensesCtx.getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['食費', '子供用品', '教育費', '医療費', 'その他'],
+                            datasets: [{
+                                data: [45000, 28000, 35000, 12000, 8000],
+                                backgroundColor: [
+                                    '#EF4444',
+                                    '#8B5CF6',
+                                    '#3B82F6',
+                                    '#10B981',
+                                    '#F59E0B'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
                                 }
                             }
                         }
-                    }
+                    });
                 }
-            });
-            
-            // Expense analysis chart
-            const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart').getContext('2d');
-            expenseAnalysisChart = new Chart(expenseAnalysisCtx, {
-                type: 'line',
-                data: {
-                    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-                    datasets: [{
-                        label: '食費',
-                        data: [40000, 42000, 45000, 43000, 47000, 45000],
-                        borderColor: '#EF4444',
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)'
-                    }, {
-                        label: '教育費',
-                        data: [30000, 32000, 35000, 33000, 37000, 35000],
-                        borderColor: '#3B82F6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '¥' + value.toLocaleString();
+                
+                // Yearly chart
+                const yearlyCtx = document.getElementById('yearlyChart');
+                if (yearlyCtx && typeof Chart !== 'undefined') {
+                    yearlyChart = new Chart(yearlyCtx.getContext('2d'), {
+                        type: 'bar',
+                        data: {
+                            labels: ['2020', '2021', '2022', '2023', '2024'],
+                            datasets: [{
+                                label: '年間貯蓄額',
+                                data: [800000, 950000, 1100000, 1200000, 1250000],
+                                backgroundColor: '#3B82F6'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return '¥' + value.toLocaleString();
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    });
                 }
-            });
+                
+                // Expense analysis chart
+                const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart');
+                if (expenseAnalysisCtx && typeof Chart !== 'undefined') {
+                    expenseAnalysisChart = new Chart(expenseAnalysisCtx.getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                            datasets: [{
+                                label: '食費',
+                                data: [40000, 42000, 45000, 43000, 47000, 45000],
+                                borderColor: '#EF4444',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)'
+                            }, {
+                                label: '教育費',
+                                data: [30000, 32000, 35000, 33000, 37000, 35000],
+                                borderColor: '#3B82F6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return '¥' + value.toLocaleString();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Chart initialization error:', error);
+            }
         }
         
         function handleAddAccount(e) {
@@ -1402,7 +1423,9 @@
                     showAuthModal();
                 }
             } else {
-                showAuthModal();
+                // For demo purposes, show dashboard directly
+                // In production, you would show auth modal here
+                handleDemoLogin();
             }
         }
         
@@ -1457,37 +1480,52 @@
         }
         
         function handleAuthentication(email, password) {
-            // Initialize Supabase if not already done
-            if (!supabase) {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-            
-            // Try to sign in
-            supabase.auth.signInWithPassword({
-                email: email,
-                password: password
-            }).then(({ data, error }) => {
-                if (error) {
-                    // If sign in fails, try to sign up
-                    supabase.auth.signUp({
-                        email: email,
-                        password: password
-                    }).then(({ data: signUpData, error: signUpError }) => {
-                        if (signUpError) {
-                            showNotification('エラー', '認証に失敗しました: ' + signUpError.message, 'error');
-                        } else {
-                            showNotification('成功', 'アカウントを作成しました。確認メールをチェックしてください。', 'success');
-                            // For demo purposes, proceed anyway
-                            handleDemoLogin();
-                        }
-                    });
-                } else {
-                    showNotification('成功', 'ログインしました', 'success');
-                    currentUser = data.user;
-                    localStorage.setItem('userSession', JSON.stringify(data.user));
-                    showDashboard();
+            try {
+                // Initialize Supabase if not already done
+                if (!supabase) {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 }
-            });
+                
+                // Try to sign in
+                supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                }).then(({ data, error }) => {
+                    if (error) {
+                        // If sign in fails, try to sign up
+                        supabase.auth.signUp({
+                            email: email,
+                            password: password
+                        }).then(({ data: signUpData, error: signUpError }) => {
+                            if (signUpError) {
+                                console.error('Sign up error:', signUpError);
+                                showNotification('エラー', '認証に失敗しました: ' + signUpError.message, 'error');
+                            } else {
+                                showNotification('成功', 'アカウントを作成しました。確認メールをチェックしてください。', 'success');
+                                // For demo purposes, proceed anyway
+                                handleDemoLogin();
+                            }
+                        }).catch(error => {
+                            console.error('Sign up catch error:', error);
+                            showNotification('エラー', '認証に失敗しました', 'error');
+                            handleDemoLogin();
+                        });
+                    } else {
+                        showNotification('成功', 'ログインしました', 'success');
+                        currentUser = data.user;
+                        localStorage.setItem('userSession', JSON.stringify(data.user));
+                        showDashboard();
+                    }
+                }).catch(error => {
+                    console.error('Sign in catch error:', error);
+                    showNotification('エラー', '認証に失敗しました', 'error');
+                    handleDemoLogin();
+                });
+            } catch (error) {
+                console.error('Authentication setup error:', error);
+                showNotification('エラー', '認証システムの初期化に失敗しました', 'error');
+                handleDemoLogin();
+            }
         }
         
         function handleDemoLogin() {
@@ -1979,9 +2017,19 @@
         const swUrl = URL.createObjectURL(swBlob);
         
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register(swUrl)
-                .then(registration => console.log('SW registered'))
-                .catch(error => console.log('SW registration failed'));
+            try {
+                navigator.serviceWorker.register(swUrl)
+                    .then(registration => console.log('SW registered successfully'))
+                    .catch(error => {
+                        console.log('SW registration failed:', error);
+                        // Fallback to external sw.js if available
+                        navigator.serviceWorker.register('./sw.js')
+                            .then(registration => console.log('External SW registered'))
+                            .catch(externalError => console.log('External SW also failed:', externalError));
+                    });
+            } catch (error) {
+                console.error('Service Worker setup error:', error);
+            }
         }
     </script>
     
