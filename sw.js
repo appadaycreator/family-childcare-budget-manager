@@ -1,14 +1,14 @@
 const CACHE_NAME = 'family-childcare-budget-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/lp.html',
-  '/how-to-use.html',
-  '/terms.html',
-  '/privacy.html',
-  '/contact.html',
-  '/manifest.json',
-  '/favicon.ico'
+  './',
+  './index.html',
+  './lp.html',
+  './how-to-use.html',
+  './terms.html',
+  './privacy.html',
+  './contact.html',
+  './manifest.json',
+  './favicon.ico'
 ];
 
 // Service Workerのインストール
@@ -18,6 +18,9 @@ self.addEventListener('install', event => {
       .then(cache => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
+      })
+      .catch(error => {
+        console.error('Cache addAll failed:', error);
       })
   );
 });
