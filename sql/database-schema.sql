@@ -20,6 +20,21 @@ CREATE TABLE budgets (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- 口座テーブル
+CREATE TABLE accounts (
+    id TEXT PRIMARY KEY,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    balance DECIMAL(12,2) DEFAULT 0,
+    monthly_goal DECIMAL(12,2) DEFAULT 0,
+    target_amount DECIMAL(12,2),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_accounts_user_id ON accounts(user_id);
+
+
 -- 支出カテゴリテーブル
 CREATE TABLE categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -52,6 +67,7 @@ CREATE INDEX idx_expenses_date ON expenses(date);
 -- RLS（Row Level Security）の有効化
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE budgets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE accounts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE expenses ENABLE ROW LEVEL SECURITY;
 
@@ -64,6 +80,11 @@ CREATE POLICY "Users can view own budgets" ON budgets FOR SELECT USING (auth.uid
 CREATE POLICY "Users can insert own budgets" ON budgets FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update own budgets" ON budgets FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can delete own budgets" ON budgets FOR DELETE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view own accounts" ON accounts FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own accounts" ON accounts FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own accounts" ON accounts FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own accounts" ON accounts FOR DELETE USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can view own categories" ON categories FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert own categories" ON categories FOR INSERT WITH CHECK (auth.uid() = user_id);
