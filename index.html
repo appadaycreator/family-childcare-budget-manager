@@ -1691,11 +1691,37 @@
             }
         }
 
-        function renderStoredAccounts() {
+       function renderStoredAccounts() {
+            const container = document.getElementById('accountsContainer');
+            if (container) container.innerHTML = '';
+
             const stored = loadFromLocalStorage('accounts') || [];
             stored.forEach(acc => {
                 addAccountToUI(acc);
             });
+       }
+
+        async function fetchAccountsFromSupabase() {
+            if (!supabase || !currentUser) return;
+
+            try {
+                const { data, error } = await supabase
+                    .from('accounts')
+                    .select('*')
+                    .eq('userId', currentUser.id);
+
+                if (error) {
+                    console.error('Supabase fetch error:', error);
+                    return;
+                }
+
+                if (Array.isArray(data)) {
+                    saveToLocalStorage('accounts', data);
+                    renderStoredAccounts();
+                }
+            } catch (err) {
+                console.error('Fetch accounts exception:', err);
+            }
         }
         
         function checkAuthStatus() {
@@ -1837,9 +1863,15 @@
                 console.log('Removing auth modal on dashboard show');
                 authModal.parentNode.removeChild(authModal);
             }
-            
+
             // Show dashboard page
             showPage('dashboard');
+
+            // Render any stored accounts first
+            renderStoredAccounts();
+
+            // Fetch latest accounts from Supabase
+            fetchAccountsFromSupabase();
             
             // Update navigation active state
             navItems.forEach(item => {
