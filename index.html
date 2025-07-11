@@ -35,8 +35,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.4/dist/umd/supabase.min.js"></script>
     
     <style>
         :root {
@@ -1008,11 +1008,16 @@
         try {
             if (window.supabase) {
                 supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase initialized successfully');
             } else {
-                console.warn('Supabase library not loaded');
+                console.warn('Supabase library not loaded, using demo mode');
+                // Fallback for demo mode
+                supabase = null;
             }
         } catch (error) {
             console.error('Supabase initialization error:', error);
+            // Fallback for demo mode
+            supabase = null;
         }
         
         // DOM elements
@@ -1067,11 +1072,22 @@
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             try {
+                console.log('Initializing app...');
                 initializeApp();
                 setupEventListeners();
                 loadUserPreferences();
-                initializeCharts();
+                
+                // Wait a bit for external scripts to load
+                setTimeout(() => {
+                    try {
+                        initializeCharts();
+                    } catch (chartError) {
+                        console.warn('Chart initialization failed:', chartError);
+                    }
+                }, 1000);
+                
                 checkAuthStatus();
+                console.log('App initialization complete');
             } catch (error) {
                 console.error('App initialization error:', error);
                 // Fallback: show dashboard even if there's an error
@@ -1233,9 +1249,15 @@
         
         function initializeCharts() {
             try {
+                // Check if Chart.js is loaded
+                if (typeof Chart === 'undefined') {
+                    console.warn('Chart.js not loaded, skipping chart initialization');
+                    return;
+                }
+                
                 // Savings chart
                 const savingsCtx = document.getElementById('savingsChart');
-                if (savingsCtx && typeof Chart !== 'undefined') {
+                if (savingsCtx) {
                     savingsChart = new Chart(savingsCtx.getContext('2d'), {
                         type: 'line',
                         data: {
@@ -1272,7 +1294,7 @@
                 
                 // Expenses chart
                 const expensesCtx = document.getElementById('expensesChart');
-                if (expensesCtx && typeof Chart !== 'undefined') {
+                if (expensesCtx) {
                     expensesChart = new Chart(expensesCtx.getContext('2d'), {
                         type: 'doughnut',
                         data: {
@@ -1302,7 +1324,7 @@
                 
                 // Yearly chart
                 const yearlyCtx = document.getElementById('yearlyChart');
-                if (yearlyCtx && typeof Chart !== 'undefined') {
+                if (yearlyCtx) {
                     yearlyChart = new Chart(yearlyCtx.getContext('2d'), {
                         type: 'bar',
                         data: {
@@ -1337,7 +1359,7 @@
                 
                 // Expense analysis chart
                 const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart');
-                if (expenseAnalysisCtx && typeof Chart !== 'undefined') {
+                if (expenseAnalysisCtx) {
                     expenseAnalysisChart = new Chart(expenseAnalysisCtx.getContext('2d'), {
                         type: 'line',
                         data: {
@@ -2018,14 +2040,15 @@
         
         if ('serviceWorker' in navigator) {
             try {
-                navigator.serviceWorker.register(swUrl)
-                    .then(registration => console.log('SW registered successfully'))
+                // Try external sw.js first
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('External SW registered successfully'))
                     .catch(error => {
-                        console.log('SW registration failed:', error);
-                        // Fallback to external sw.js if available
-                        navigator.serviceWorker.register('./sw.js')
-                            .then(registration => console.log('External SW registered'))
-                            .catch(externalError => console.log('External SW also failed:', externalError));
+                        console.log('External SW registration failed:', error);
+                        // Fallback to inline SW
+                        navigator.serviceWorker.register(swUrl)
+                            .then(registration => console.log('Inline SW registered successfully'))
+                            .catch(inlineError => console.log('Inline SW also failed:', inlineError));
                     });
             } catch (error) {
                 console.error('Service Worker setup error:', error);
