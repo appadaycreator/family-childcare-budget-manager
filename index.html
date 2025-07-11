@@ -996,8 +996,8 @@
         const SUPABASE_URL = 'https://wtkdtskqqgtdjlcdmktr.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0a2R0c2txcWd0ZGpsY2Rta3RyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIxODI3NDEsImV4cCI6MjA2Nzc1ODc0MX0.2B7aJ8aeYINDchblUE3bA4ikRB94053LUzmGwW8MAzo';
         
-        // Initialize Supabase (uncomment when ready)
-        // supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Initialize Supabase
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         // DOM elements
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -1414,17 +1414,78 @@
                         <p class="text-center text-sm text-gray-600 mt-4">
                             アカウントをお持ちでない場合は、自動的に新規登録されます
                         </p>
+                        <div class="text-center mt-4">
+                            <button id="demoLogin" class="text-blue-600 hover:text-blue-800 text-sm">
+                                デモモードで試す
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;
             document.body.appendChild(authModal);
             
-            // For demo purposes, skip authentication
-            setTimeout(() => {
+            // Add event listeners
+            const authForm = authModal.querySelector('#authForm');
+            const demoLoginBtn = authModal.querySelector('#demoLogin');
+            
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(authForm);
+                const email = formData.get('email');
+                const password = formData.get('password');
+                
+                // Handle authentication
+                handleAuthentication(email, password);
+            });
+            
+            demoLoginBtn.addEventListener('click', () => {
+                handleDemoLogin();
+            });
+        }
+        
+        function handleAuthentication(email, password) {
+            // Initialize Supabase if not already done
+            if (!supabase) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+            
+            // Try to sign in
+            supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            }).then(({ data, error }) => {
+                if (error) {
+                    // If sign in fails, try to sign up
+                    supabase.auth.signUp({
+                        email: email,
+                        password: password
+                    }).then(({ data: signUpData, error: signUpError }) => {
+                        if (signUpError) {
+                            showNotification('エラー', '認証に失敗しました: ' + signUpError.message, 'error');
+                        } else {
+                            showNotification('成功', 'アカウントを作成しました。確認メールをチェックしてください。', 'success');
+                            // For demo purposes, proceed anyway
+                            handleDemoLogin();
+                        }
+                    });
+                } else {
+                    showNotification('成功', 'ログインしました', 'success');
+                    currentUser = data.user;
+                    localStorage.setItem('userSession', JSON.stringify(data.user));
+                    document.body.removeChild(document.querySelector('.fixed.inset-0'));
+                    showDashboard();
+                }
+            });
+        }
+        
+        function handleDemoLogin() {
+            currentUser = { id: 'demo-user', email: 'demo@example.com' };
+            localStorage.setItem('userSession', JSON.stringify(currentUser));
+            const authModal = document.querySelector('.fixed.inset-0');
+            if (authModal) {
                 document.body.removeChild(authModal);
-                currentUser = { id: 'demo-user', email: 'demo@example.com' };
-                showDashboard();
-            }, 1000);
+            }
+            showDashboard();
         }
         
         function showDashboard() {
@@ -1729,7 +1790,10 @@
         });
         
         // Add to expenses page
-        expensesPage.insertBefore(searchInput, expensesPage.querySelector('.grid'));
+        const expensesContent = expensesPage.querySelector('.max-w-7xl');
+        if (expensesContent) {
+            expensesContent.insertBefore(searchInput, expensesContent.firstChild);
+        }
         
         // Notification system
         function showNotification(title, message, type = 'info') {
